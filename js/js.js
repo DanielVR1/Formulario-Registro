@@ -35,6 +35,11 @@ function validar() {
 
     if(comprob == true){
         pasarPag();
+        var nombre = document.getElementById('email').value;
+        var valor = document.getElementById('contraseña').value;
+        var tiempo = 1;
+        setCookie(nombre,valor,tiempo);
+        window.location="../FormInicioSesion/index.html";
     }
 }
 
@@ -46,4 +51,28 @@ function inicializar(){
 
 function pasarPag(){
     document.getElementById("pag").innerHTML = "<h4>¡¡Registro completado!!</h4>";
+}
+
+//COOKIES
+
+function setCookie(nombre, valor, tiempo){
+    var d = new Date();
+    d.setTime(d.getTime()+tiempo*24*60*60*1000);
+    var tiempo = "expires="+d.toUTCString();
+    document.cookie = nombre + "=" + valor + ";" + tiempo + ";path=/"
+}
+
+function getCookie(nombre){
+    var nom= nombre+"=";
+    var array = document.cookie.split(";");
+    for(var i=0;i<array.length;i++){
+        var c = array[i];
+        while(c.charAt(0)==" "){
+            c = c.substring(1);
+        }
+        if(c.indexOf(nombre) == 0){
+            return c.substring(nom.length, c.length);
+        }
+    }
+    return "";
 }
